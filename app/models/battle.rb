@@ -28,7 +28,7 @@ class Battle < ActiveRecord::Base
     end
 
     #creates a battle with your hero and a random villain
-    def start_a_battle(hero, villain = Villain.all[rand(Villain.all.length)])
+    def start_a_battle(hero, villain)
         Battle.create(hero_id: hero.id, villain_id: villain.id)
     end
 
