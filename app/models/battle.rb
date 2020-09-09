@@ -3,14 +3,14 @@ class Battle < ActiveRecord::Base
     belongs_to :villain
 
     #destroys the hero, the hero lost and died 
-    def hero_lost
+    def self.hero_lost(hero)
         if hero.hp <= 0
-            self.hero.destroy
+            hero.destroy
         end
     end
 
     #villain loses battle, gets sent to insane asylum
-    def villain_lost
+    def self.villain_lost
         if villain.hp <= 0
             self.villain.insane_asylum = true
         end
@@ -28,7 +28,7 @@ class Battle < ActiveRecord::Base
     end
 
     #creates a battle with your hero and a random villain
-    def start_a_battle(hero, villain)
+    def self.start_a_battle(hero, villain)
         Battle.create(hero_id: hero.id, villain_id: villain.id)
     end
 

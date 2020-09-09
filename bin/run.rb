@@ -1,4 +1,5 @@
 require_relative '../config/environment'
+
     #greets the user to start the battle simulator
     def greeting
         puts "Welcome to the Hero Battle Simulator."
@@ -58,15 +59,19 @@ require_relative '../config/environment'
     #returns the alter egos of all the already created heros
     def display_heros
         i = 1
-        Hero.all.each {|hero| puts "#{i}. " + hero.alter_ego}
-        i + 1
+        Hero.all.each do |hero| 
+            puts "#{i}. " + hero.alter_ego
+            i +=1
+        end
     end
 
     #returns the alter egos of all the already created villains
     def display_villains
         i = 1
-        Villain.all.each {|villain| puts "#{i}. " + villain.alter_ego}
-        i + 1
+        Villain.all.each do |villain| 
+            puts "#{i}. " + villain.alter_ego
+            i +=1
+        end
     end
 
     #choose a hero from the list of heros or create your own if you do not like the choices
@@ -75,8 +80,9 @@ require_relative '../config/environment'
         puts "Choose a Hero by typing the number they are labeled with into your console."
         choice = gi_integer - 1
         if choice <= Hero.all.length
-            puts "You chose: #{Hero.all[choice]}"
-            generate_hero_nemesis
+            puts "You chose: #{Hero.all[choice].alter_ego}"
+            hero = Hero.all[choice]
+            generate_hero_nemesis(hero)
         else puts "Your choice does not exist. Press 1 to rechoose, Press 2 to generate a Hero, Press 3 to go back."
             choice = gi_integer
             if choice == 1
@@ -95,8 +101,9 @@ require_relative '../config/environment'
         puts "Choose a Villain by typing the number they are labeled with into your console."
         choice = gi_integer - 1
         if choice <= Villain.all.length
-            puts "You chose: #{Villain.all[choice]}"
-            generate_villain_nemesis
+            puts "You chose: #{Villain.all[choice].alter_ego}"
+            villain = Villain.all[choice]
+            generate_villain_nemesis(villain)
         else puts "Your choice does not exist. Press 1 to rechoose, Press 2 to generate a Hero, Press 3 to go back."
             choice = gi_integer
             if choice == 1
@@ -122,7 +129,7 @@ require_relative '../config/environment'
             elsif choice == 2
                 generate_villain_name
             elsif choice == 3
-                choose_villain
+                villain_setup
             else puts "Your input was not recognized. Please begin this step again."
                 generate_villain_name
             end
@@ -141,7 +148,7 @@ require_relative '../config/environment'
             elsif choice == 2
                 generate_hero_name
             elsif choice == 3
-                choose_hero
+                hero_setup
             else puts "Your input was not recognized. Please begin this step again."
                 generate_hero_name
             end
@@ -157,11 +164,11 @@ require_relative '../config/environment'
             if choice == 1
                 generate_villain_super_power(villain)
             elsif choice == 2
-                generate_villain_alter_ego
+                generate_villain_alter_ego(villain)
             elsif choice == 3
                 generate_villain_name
             else puts "Your input was not recognized. Please begin this step again."
-                generate_villain_alter_ego
+                generate_villain_alter_ego(villain)
             end
     end
 
@@ -175,11 +182,11 @@ require_relative '../config/environment'
             if choice == 1
                 generate_hero_super_power(hero)
             elsif choice == 2
-                generate_hero_alter_ego
+                generate_hero_alter_ego(hero)
             elsif choice == 3
                 generate_hero_name
             else puts "Your input was not recognized. Please begin this step again."
-                generate_hero_alter_ego
+                generate_hero_alter_ego(hero)
             end
     end
 
@@ -339,7 +346,7 @@ require_relative '../config/environment'
             end
     end
 
-     #if user generated a villain h, user creates a gender for the villain
+     #if user generated a villain hp, user creates a gender for the villain
      def generate_villain_gender(hero)
         puts "Is your villain male, female, or any other?"
         choice = gi_string
@@ -451,17 +458,18 @@ require_relative '../config/environment'
         choice = gi_string
         villain.nemesis = choice
         puts "Your villain's nemesis is #{villain.nemesis}. If this is correct, press 1. Press 2 if not. Press 3 to go back. Avoid this if you do not want to rewrite your origin story."
-        choie = gi_integer
+        choice = gi_integer
             if choice == 1
-                generate_villain_hero_battle(villain)
+                villain.save
+                Hero.create(name: Faker::Name.name_with_middle, alter_ego: villain.nemesis, super_power: Faker::Superhero.power, power_lvl: Faker::Number.within(range: 50..300), resistance: Faker::Number.within(range: 1..40), hp: Faker::Number.within(range: 500..1000), gender: Faker::Gender.binary_type, race: Faker::Games::DnD.species, origin_story: Faker::Lorem.paragraphs(number: 3), nemesis: nil, grievance: Faker::Verb.base, insane_asylum: Faker::Boolean.boolean, mental_health: Faker::Number.within(range: 1..10))
+                generate_your_villain_battle(villain)
             elsif choice == 2
                 generate_villain_nemesis(villain)
             elsif choice == 3
                 generate_villain_origin_story(villain)
             else puts "Your input was not recognized. Please begin this step again."
-            end
-        villain.save
-        new_hero = Hero.create(name: villain.nemesis, alter_ego: Faker::Superhero.name, super_power: Faker::Superhero.power, power_lvl: Faker::Number.within(range: 50..300), resistance: Faker::Number.within(range: 1..40), hp: Faker::Number.within(range: 500..1000), gender: Faker::Gender.binary_type, race: Faker::Games::DnD.species, origin_story: Faker::Lorem.paragraphs(number: 3), nemesis: nil, grievance: Faker::Verb.base, insane_asylum: Faker::Boolean.boolean, mental_health: Faker::Number.within(range: 1..10))   
+                generate_villain_nemesis(villain)
+            end   
     end
 
     #if user generated a hero origin story, user creates a nemesis for the hero
@@ -470,17 +478,18 @@ require_relative '../config/environment'
         choice = gi_string
         hero.nemesis = choice
         puts "Your hero's nemesis is #{hero.nemesis}. If this is correct, press 1. Press 2 if not. Press 3 to go back. Avoid this if you do not want to rewrite your origin story."
-        choie = gi_integer
+        choice = gi_integer
             if choice == 1
+                hero.save
+                Villain.create(name: Faker::Name.name_with_middle, alter_ego: hero.nemesis, super_power: Faker::Superhero.power, power_lvl: Faker::Number.within(range: 50..300), resistance: Faker::Number.within(range: 1..40), hp: Faker::Number.within(range: 500..1000), gender: Faker::Gender.binary_type, race: Faker::Games::DnD.species, origin_story: Faker::Lorem.paragraphs(number: 3), nemesis: nil, grievance: Faker::Verb.base, insane_asylum: Faker::Boolean.boolean, mental_health: Faker::Number.within(range: 1..10))
                 generate_your_hero_battle(hero)
             elsif choice == 2
                 generate_hero_nemesis(hero)
             elsif choice == 3
                 generate_hero_origin_story(hero)
             else puts "Your input was not recognized. Please begin this step again."
-            end
-        hero.save
-        new_villain = Villain.create(name: hero.nemesis, alter_ego: Faker::Superhero.name, super_power: Faker::Superhero.power, power_lvl: Faker::Number.within(range: 50..300), resistance: Faker::Number.within(range: 1..40), hp: Faker::Number.within(range: 500..1000), gender: Faker::Gender.binary_type, race: Faker::Games::DnD.species, origin_story: Faker::Lorem.paragraphs(number: 3), nemesis: nil, grievance: Faker::Verb.base, insane_asylum: Faker::Boolean.boolean, mental_health: Faker::Number.within(range: 1..10))   
+                generate_hero_nemesis(hero)
+            end   
     end
 
     #the hero has been picked or created, the hero picks a villain or creates a completely random villain
@@ -490,16 +499,16 @@ require_relative '../config/environment'
         display_villains
         puts "Would you like to fight any of these Villains?"
         puts "If not we can find you a random Villain or you can generate one to fight."
-        puts "Press 1 to fight a Villain from the list. Press 2 to generate a Villain."
+        puts "Press 1 to fight a Villain from the list. Press 2 to generate a random Villain."
         choice = gi_integer
             if choice == 1
                 choose_villain_from_list(hero)
             elsif choice == 2
-                villain = Villain.new(name: Faker::Name.name_with_middle, alter_ego: Faker::Superhero.name, super_power: Faker::Superhero.power, power_lvl: Faker::Number.within(range: 50..300), resistance: Faker::Number.within(range: 1..40), hp: Faker::Number.within(range: 500..1000), gender: Faker::Gender.binary_type, race: Faker::Games::DnD.species, origin_story: Faker::Lorem.paragraphs(number: 3), nemesis: nil, grievance: Faker::Verb.base, insane_asylum: Faker::Boolean.boolean, mental_health: Faker::Number.within(range: 1..10))
-                #BATTLE GENERATOR/S PLACEHOLDER
+                villain = Villain.create(name: Faker::Name.name_with_middle, alter_ego: Faker::Superhero.name, super_power: Faker::Superhero.power, power_lvl: Faker::Number.within(range: 50..300), resistance: Faker::Number.within(range: 1..40), hp: Faker::Number.within(range: 500..1000), gender: Faker::Gender.binary_type, race: Faker::Games::DnD.species, origin_story: Faker::Lorem.paragraphs(number: 3), nemesis: nil, grievance: Faker::Verb.base, insane_asylum: Faker::Boolean.boolean, mental_health: Faker::Number.within(range: 1..10))
+                #BATTLE GENERATOR/SEQUENCE PLACEHOLDER
             else puts "Your input was not recognized, and the world needs you! Please begin this step again."
             end
-            
+            battle_sequence(hero, villain)
     end
                 
     #the villain has been picked or created, the villain picks a hero or creates a completely random hero
@@ -508,15 +517,16 @@ require_relative '../config/environment'
         puts "#{villain.alter_ego} it is your job to cause as much destruction as possible. Which goody two-shoes hero will you humiliate today?"
         display_heros
         puts "You can bully any of these into submission or create another caped-crusader"
-        puts "Press 1 to fight a Hero from the list. Press to 2 to generate a Hero."
+        puts "Press 1 to fight a Hero from the list. Press to 2 to generate a random Hero."
         choice = gi_integer
             if choice == 1
                 choose_hero_from_list(villain)
             elsif choice == 2
-                hero = Hero.new(name: Faker::Name.name_with_middle, alter_ego: Faker::Superhero.name, super_power: Faker::Superhero.power, power_lvl: Faker::Number.within(range: 50..300), resistance: Faker::Number.within(range: 1..40), hp: Faker::Number.within(range: 500..1000), gender: Faker::Gender.binary_type, race: Faker::Games::DnD.species, origin_story: Faker::Lorem.paragraphs(number: 3), nemesis: nil)
-                #BATTLE GENERATOR/SEQUENCE PLACEHOLDER
+                hero = Hero.create(name: Faker::Name.name_with_middle, alter_ego: Faker::Superhero.name, super_power: Faker::Superhero.power, power_lvl: Faker::Number.within(range: 50..300), resistance: Faker::Number.within(range: 1..40), hp: Faker::Number.within(range: 500..1000), gender: Faker::Gender.binary_type, race: Faker::Games::DnD.species, origin_story: Faker::Lorem.paragraphs(number: 3), nemesis: nil)
             else puts "Your input was not recognized. Please begin this step again."
-            end
+                generate_your_villain_battle(villain)
+            end     
+            battle_sequence(hero, villain)
     end
 
     def choose_villain_from_list(hero)
@@ -525,14 +535,11 @@ require_relative '../config/environment'
         choice = gi_integer - 1
         if choice <= Villain.all.length
             puts "You chose: #{Villain.all[choice]}"
-        else puts "Your choice does not exist. Press 1 to rechoose"
-            choice = gi_integer
-            if choice == 1
-                choose_villain_from_list
-            end
+        else puts "Your choice does not exist. Please begin this step again."
+            choose_villain_from_list(hero)
         end
         villain = Villain.all[choice]
-        battle_sequence(hero, villain)
+
     end
 
     def choose_hero_from_list(villain)
@@ -541,11 +548,8 @@ require_relative '../config/environment'
         choice = gi_integer - 1
         if choice <= Hero.all.length
             puts "You chose: #{Hero.all[choice]}"
-        else puts "Your choice does not exist. Press 1 to rechoose"
-            choice = gi_integer
-            if choice == 1
-                choose_hero_from_list
-            end
+        else puts "Your choice does not exist. Please begin step again"
+            choose_hero_from_list(villain)
         end
         hero = Hero.all[choice]
         battle_sequence(hero, villain)
@@ -554,16 +558,19 @@ require_relative '../config/environment'
 
 
 
+    #creates a battle sequence for the hero and villain chosen
     def battle_sequence(hero, villain)
+        Battle.start_a_battle(hero, villain)
 
         if villain.hp <= 0
             Battle.villain_lost
         elsif hero.hp <= 0
-
+            Battle.hero_lost
         else
-        battle_sequence
+            battle_sequence
+        end
         
     end
 
-end
+
     greeting
