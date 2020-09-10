@@ -627,9 +627,8 @@ require_relative '../config/environment'
         line
         choice = gi_integer
             if choice == 1
-                villain.save
                 Hero.create(name: Faker::Name.name_with_middle, alter_ego: villain.nemesis, super_power: Faker::Superhero.power, power_lvl: Faker::Number.within(range: 50..300), resistance: Faker::Number.within(range: 1..40), hp: Faker::Number.within(range: 500..1000), gender: Faker::Gender.binary_type, race: Faker::Games::DnD.species, origin_story: Faker::Lorem.paragraphs(number: 3), nemesis: nil)
-                generate_your_villain_battle(villain)
+                generate_villain_grievance(villain)
             elsif choice == 2
                 generate_villain_nemesis(villain)
             elsif choice == 3
@@ -638,6 +637,34 @@ require_relative '../config/environment'
                 puts "Your input was not recognized. Please begin this step again."
                 line
                 generate_villain_nemesis(villain)
+            end   
+    end
+
+    #if user generated a nemesis, user creates a grievance for the villain
+    def generate_villain_grievance(villain)
+        buffer
+        line
+        puts "What is your villain's grievance?"
+        line
+        choice = gi_string
+        villain.grievance = choice
+        villain.mental_health = Faker::Number.within(range: 1..10)
+        buffer
+        line
+        puts "Your villain's grievance is #{villain.grievance}. If this is correct, press 1. Press 2 if not. Press 3 to go back. Avoid this if you do not want to rewrite your origin story."
+        line
+        choice = gi_integer
+            if choice == 1
+                villain.save
+                generate_your_villain_battle(villain)
+            elsif choice == 2
+                generate_villain_grievance(villain)
+            elsif choice == 3
+                generate_villain_nemesis(villain)
+            else line
+                puts "Your input was not recognized. Please begin this step again."
+                line
+                generate_villain_grievance(villain)
             end   
     end
 
@@ -805,7 +832,6 @@ require_relative '../config/environment'
             hero_main_menu(hero)
         #destroys the hero, the hero lost and died 
         elsif hero.hp <= 0
-            line
             puts "#{villain.alter_ego} has won the battle"
             puts "'Today, we lost a great hero. #{hero.name}, or as many of you knew them as #{hero.alter_ego}, was one of the best of us. It is a sad day for #{battle.location}'"
             puts "GAME OVER"
@@ -833,7 +859,6 @@ require_relative '../config/environment'
             battle.villain_lost(villain)
             line
             puts "'Today, we lost a great hero. #{hero.name}, or as many of you knew them as #{hero.alter_ego}, was one of the best of us. It is a sad day for #{battle.location}'"
-            line
             battle.hero_lost(hero)
             battle.update(hero_win: false)
             villain.update(hp: villain_hp)
