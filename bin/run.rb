@@ -78,25 +78,29 @@ require_relative '../config/environment'
     end
 
     def line
-        puts "_____________________________________________________________________"
+        puts "_____________________________________________________________________________________________________________________________________________________________________________________"
     end
 
     #returns the alter egos of all the already created heros
     def display_heros
+        line
         i = 1
         Hero.all.each do |hero| 
             puts "#{i}. " + hero.alter_ego
             i +=1
         end
+        line
     end
 
     #returns the alter egos of all the already created villains
     def display_villains
+        line
         i = 1
         Villain.all.each do |villain| 
             puts "#{i}. " + villain.alter_ego
             i +=1
         end
+        line
     end
 
     #choose a hero from the list of heros or create your own if you do not like the choices
@@ -417,9 +421,7 @@ require_relative '../config/environment'
         buffer
         line
         puts "Your villain's hp is being calculated..."
-        3.times do
-            puts "..."
-        end
+        buffer
         hp = rand(500..1000)
         villain.hp = hp
         puts "Your villain's health point are #{villain.hp}"
@@ -442,9 +444,7 @@ require_relative '../config/environment'
         buffer
         line
         puts "Your hero's hp is being calculated..."
-        3.times do
-            puts "..."
-        end
+        buffer
         hp = rand(500..1000)
         hero.hp = hp
         puts "Your hero's health point are #{hero.hp}"
@@ -489,10 +489,15 @@ require_relative '../config/environment'
 
     #if user generated a hero hp, user creates a gender for the hero
     def generate_hero_gender(hero)
+        buffer
+        line
         puts "Is your hero male, female, or any other?"
+        line
         choice = gi_string
         hero.gender = choice
+        line
         puts "Your hero's gender is #{hero.gender}. If this is correct, press 1. Press 2 if not. Press 3 to go back."
+        line
         choice = gi_integer
             if choice == 1
                 generate_hero_race(hero)
@@ -500,17 +505,25 @@ require_relative '../config/environment'
                 generate_hero_gender(hero)
             elsif choice == 3
                 generate_hero_hp(hero)
-            else puts "Your input was not recognized. Please begin this step again."
+            else line
+                puts "Your input was not recognized. Please begin this step again."
+                line
                 generate_hero_gender(hero)
             end
     end
 
      #if user generated a villain gender, user creates a race for the villain
      def generate_villain_race(villain)
+        buffer
+        line
         puts "What race is your villain?"
+        line
         choice = gi_string
         villain.race = choice
+        buffer
+        line
         puts "Your villain's race is #{villain.race}. If this is correct, press 1. Press 2 if not. Press 3 to go back."
+        line
         choice = gi_integer
             if choice == 1
                 generate_villain_origin_story(villain)
@@ -518,17 +531,25 @@ require_relative '../config/environment'
                 generate_villain_race(villain)
             elsif choice == 3
                 generate_villain_gender(villain)
-            else puts "Your input was not recognized. Please begin this step again."
+            else line 
+                puts "Your input was not recognized. Please begin this step again."
+                line
                 generate_villain_race(villain)
             end
     end
 
     #if user generated a hero gender, user creates a race for the hero
     def generate_hero_race(hero)
+        buffer
+        line
         puts "What race is your hero?"
+        line
         choice = gi_string
         hero.race = choice
+        buffer
+        line
         puts "Your hero's race is #{hero.race}. If this is correct, press 1. Press 2 if not. Press 3 to go back."
+        line
         choice = gi_integer
             if choice == 1
                 generate_hero_origin_story(hero)
@@ -536,17 +557,25 @@ require_relative '../config/environment'
                 generate_hero_race(hero)
             elsif choice == 3
                 generate_hero_gender(hero)
-            else puts "Your input was not recognized. Please begin this step again."
+            else line
+                puts "Your input was not recognized. Please begin this step again."
+                line
                 generate_hero_race(hero)
             end
     end
 
     #if user generated a villain race, user creates an origin story for the villain
     def generate_villain_origin_story(villain)
+        buffer
+        line
         puts "What is your villain's origin story?"
+        line
         choice = gi_string
         villain.origin_story = choice
+        buffer
+        line
         puts "Your villain's origins are #{villain.origin_story}. If this is correct, press 1. Press 2 if not. Press 3 to go back."
+        line
         choice = gi_integer
             if choice == 1
                 generate_villain_nemesis(villain)
@@ -554,16 +583,24 @@ require_relative '../config/environment'
                 generate_villain_origin_story(villain)
             elsif choice == 3
                 generate_villain_race(villain)
-            else puts "Your input was not recognized. Please begin this step again."
+            else line 
+                puts "Your input was not recognized. Please begin this step again."
+                line
             end
     end
 
     #if user generated a hero race, user creates an origin story for the hero
     def generate_hero_origin_story(hero)
+        buffer
+        line
         puts "What is your hero's origin story?"
+        line
         choice = gi_string
         hero.origin_story = choice
+        buffer
+        line
         puts "Your hero's origins are #{hero.origin_story}. If this is correct, press 1. Press 2 if not. Press 3 to go back."
+        line
         choice = gi_integer
             if choice == 1
                 generate_hero_nemesis(hero)
@@ -571,16 +608,24 @@ require_relative '../config/environment'
                 generate_hero_origin_story(hero)
             elsif choice == 3
                 generate_hero_race(hero)
-            else puts "Your input was not recognized. Please begin this step again."
+            else line
+                puts "Your input was not recognized. Please begin this step again."
+                line
             end
     end
 
       #if user generated a villain origin story, user creates a nemesis for the villain
       def generate_villain_nemesis(villain)
+        buffer
+        line
         puts "Who is your villain's nemesis?"
+        line
         choice = gi_string
         villain.nemesis = choice
+        buffer
+        line
         puts "Your villain's nemesis is #{villain.nemesis}. If this is correct, press 1. Press 2 if not. Press 3 to go back. Avoid this if you do not want to rewrite your origin story."
+        line
         choice = gi_integer
             if choice == 1
                 villain.save
@@ -590,17 +635,25 @@ require_relative '../config/environment'
                 generate_villain_nemesis(villain)
             elsif choice == 3
                 generate_villain_origin_story(villain)
-            else puts "Your input was not recognized. Please begin this step again."
+            else line
+                puts "Your input was not recognized. Please begin this step again."
+                line
                 generate_villain_nemesis(villain)
             end   
     end
 
     #if user generated a hero origin story, user creates a nemesis for the hero
     def generate_hero_nemesis(hero)
+        buffer
+        line
         puts "Who is your hero's nemesis?"
+        line
         choice = gi_string
         hero.nemesis = choice
+        buffer
+        line
         puts "Your hero's nemesis is #{hero.nemesis}. If this is correct, press 1. Press 2 if not. Press 3 to go back. Avoid this if you do not want to rewrite your origin story."
+        line
         choice = gi_integer
             if choice == 1
                 hero.save
@@ -610,44 +663,57 @@ require_relative '../config/environment'
                 generate_hero_nemesis(hero)
             elsif choice == 3
                 generate_hero_origin_story(hero)
-            else puts "Your input was not recognized. Please begin this step again."
+            else line
+                puts "Your input was not recognized. Please begin this step again."
+                line
                 generate_hero_nemesis(hero)
             end   
     end
 
     #the hero has been picked or created, the hero picks a villain or creates a completely random villain
     def generate_your_hero_battle(hero)
+        buffer
+        line
         puts "Get ready #{hero.alter_ego}, the people need you!"
         puts "What evil wretch are you going to throw behind bars today?"
         display_villains
         puts "Would you like to fight any of these Villains?"
-        puts "If not we can find you a random Villain or you can generate one to fight."
+        line
         puts "Press 1 to fight a Villain from the list. Press 2 to generate a random Villain."
+        line
         choice = gi_integer
             if choice == 1
                 choose_villain_from_list(hero)
             elsif choice == 2
                 villain = Villain.create(name: Faker::Name.name_with_middle, alter_ego: Faker::Superhero.name, super_power: Faker::Superhero.power, power_lvl: Faker::Number.within(range: 50..300), resistance: Faker::Number.within(range: 1..40), hp: Faker::Number.within(range: 500..1000), gender: Faker::Gender.binary_type, race: Faker::Games::DnD.species, origin_story: Faker::Lorem.paragraphs(number: 3), nemesis: nil, grievance: Faker::Verb.base, insane_asylum: false, mental_health: Faker::Number.within(range: 1..10))
                 hero_battle_sequence(hero, villain)
-            else puts "Your input was not recognized, and the world needs you! Please begin this step again."
+            else line
+                puts "Your input was not recognized, and the world needs you! Please begin this step again."
+                line
                 generate_your_hero_battle(hero)
             end
     end
                 
     #the villain has been picked or created, the villain picks a hero or creates a completely random hero
     def generate_your_villain_battle(villain)
+        buffer
+        line
         puts "Civilization has been too good for too long. Time to cause some mayhem"
         puts "#{villain.alter_ego} it is your job to cause as much destruction as possible. Which goody two-shoes hero will you humiliate today?"
         display_heros
         puts "You can bully any of these into submission or create another caped-crusader"
+        line
         puts "Press 1 to choose a Hero from the list. Press to 2 to generate a random Hero."
+        line
         choice = gi_integer
             if choice == 1
                 choose_hero_from_list(villain)
             elsif choice == 2
                 hero = Hero.create(name: Faker::Name.name_with_middle, alter_ego: Faker::Superhero.name, super_power: Faker::Superhero.power, power_lvl: Faker::Number.within(range: 50..300), resistance: Faker::Number.within(range: 1..40), hp: Faker::Number.within(range: 500..1000), gender: Faker::Gender.binary_type, race: Faker::Games::DnD.species, origin_story: Faker::Lorem.paragraphs(number: 3), nemesis: nil)
                 villain_battle_sequence(hero, villain)
-            else puts "Your input was not recognized. Please begin this step again."
+            else line
+                puts "Your input was not recognized. Please begin this step again."
+                line
                 generate_your_villain_battle(villain)
             end     
     end
@@ -655,9 +721,13 @@ require_relative '../config/environment'
     def choose_villain_from_list(hero)
         display_villains
         puts "Choose a Villain by typing the number they are labeled with into your console."
+        line
         choice = gi_integer - 1
         if choice <= Villain.all.length
+            buffer
+            line
             puts "You chose: #{Villain.all[choice].alter_ego}. If this is correct, press 1. Press 2 to rechoose."
+            line
             choice2 = gi_integer
                 if choice2 == 1
                     villain = Villain.all[choice]
@@ -665,7 +735,9 @@ require_relative '../config/environment'
                 elsif choice2 == 2
                     choose_villian_from_list(hero)
                 end
-        else puts "Your choice does not exist. Please begin this step again."
+        else line
+            puts "Your choice does not exist. Please begin this step again."
+            line
             choose_villain_from_list(hero)
         end
 
@@ -674,9 +746,13 @@ require_relative '../config/environment'
     def choose_hero_from_list(villain)
         display_heros
         puts "Choose a Hero by typing the number they are labeled with into your console."
+        line
         choice = gi_integer - 1
         if choice <= Hero.all.length
+            buffer
+            line
             puts "You chose: #{Hero.all[choice].alter_ego}. If this is correct, press 1. Press 2 to rechoose."
+            line
             choice2 = gi_integer
                 if choice2 == 1
                     hero = Hero.all[choice]
@@ -684,7 +760,9 @@ require_relative '../config/environment'
                 elsif choice2 == 2
                     choose_hero_from_list(villain)
                 end
-        else puts "Your choice does not exist. Please begin step again"
+        else line
+            puts "Your choice does not exist. Please begin step again"
+            line
             choose_hero_from_list(villain)
         end
     end
@@ -698,32 +776,41 @@ require_relative '../config/environment'
         villain_hp = villain.hp
         while villain.hp > 0 && hero.hp > 0 do
             attack(hero, villain)
+            line
             puts "The hero's health is #{hero.hp}"
             puts "The villain's health is #{villain.hp}"
         end
         #if villain and hero looses battle, hero dies and villain gets sent to insane asylum
         if villain.hp <= 0 && hero.hp <= 0
             battle.villain_lost(villain)
+            line
             puts "'Today, we lost a great hero. #{hero.name}, or as many of you knew them as #{hero.alter_ego}, was one of the best of us. It is a sad day for #{battle.location}'"
+            line
             battle.hero_lost(hero)
             battle.update(hero_win: false)
             villain.update(hp: villain_hp)
+            line
             puts "'Darn foiled again, but you'll never end me!' said #{villain.name} as they were lead to the asylum."
             puts "GAME OVER"
+            line
         elsif villain.hp <=0    
             battle.villain_lost(villain)
             battle.update(hero_win: true)
             hero.update(hp: hero_hp)
             villain.update(hp: villain_hp)
+            line
             puts "#{hero.alter_ego} has won the battle"
             puts "'Darn foiled again, but you'll never end me!' said #{villain.name} as they were lead to the asylum."
+            line
             battle.destruction
             hero_main_menu(hero)
         #destroys the hero, the hero lost and died 
         elsif hero.hp <= 0
+            line
             puts "#{villain.alter_ego} has won the battle"
             puts "'Today, we lost a great hero. #{hero.name}, or as many of you knew them as #{hero.alter_ego}, was one of the best of us. It is a sad day for #{battle.location}'"
             puts "GAME OVER"
+            line
             battle.hero_lost(hero)
             battle.update(hero_win: false)
             villain.update(hp: villain_hp)
@@ -738,30 +825,39 @@ require_relative '../config/environment'
         villain_hp = villain.hp
         while villain.hp > 0 && hero.hp > 0 do
             attack(hero, villain)
+            line
             puts "The hero's health is #{hero.hp}"
             puts "The villain's health is #{villain.hp}"
         end
         #if villain and hero looses battle, hero dies and villain gets sent to insane asylum
         if villain.hp <= 0 && hero.hp <= 0
             battle.villain_lost(villain)
+            line
             puts "'Today, we lost a great hero. #{hero.name}, or as many of you knew them as #{hero.alter_ego}, was one of the best of us. It is a sad day for #{battle.location}'"
+            line
             battle.hero_lost(hero)
             battle.update(hero_win: false)
             villain.update(hp: villain_hp)
+            line
             puts "'Darn foiled again, but you'll never end me!' said #{villain.name} as they were lead to the asylum."
             puts "GAME OVER"
+            line
         elsif villain.hp <=0    
             battle.villain_lost(villain)
             battle.update(hero_win: true)
             hero.update(hp: hero_hp)
             villain.update(hp: villain_hp)
+            line
             puts "#{hero.alter_ego} has won the battle"
             puts "'Darn foiled again, but you'll never end me!' said #{villain.name} as they were lead to the asylum."
             puts "GAME OVER"
+            line
         #destroys the hero, the hero lost and died, sends villain to the main menu
         elsif hero.hp <= 0
+            line
             puts "#{villain.alter_ego} has won the battle"
             puts "'Today, we lost a great hero. #{hero.name}, or as many of you knew them as #{hero.alter_ego}, was one of the best of us. It is a sad day for #{battle.location}'"
+            line
             battle.hero_lost(hero)
             battle.update(hero_win: false)
             villain.update(hp: villain_hp)
@@ -793,6 +889,7 @@ require_relative '../config/environment'
     end
 
     def hero_menu_display(hero)
+        line
         puts "1. Fight Another Villain"
         puts "2. Check Battle Record"
         puts "3. Rename Hero"
@@ -880,7 +977,7 @@ require_relative '../config/environment'
             choice = gi_integer
             if choice == 1
                 line
-                puts "Press Ctrl + C."
+                puts "Good Game!"
                 line
             else line
                 hero_menu_display(hero)
@@ -892,6 +989,7 @@ require_relative '../config/environment'
     end
 
     def villain_menu_display(villain)
+        line
         puts "1. Fight Another Hero"
         puts "2. Check Battle Record"
         puts "3. Rename Villain"
@@ -977,7 +1075,7 @@ require_relative '../config/environment'
             choice = gi_integer
             if choice == 1
                 line
-                puts "Press Ctrl + C."
+                    puts "Good Game!"
                 line
             else line
                 villain_menu_display(villain)
