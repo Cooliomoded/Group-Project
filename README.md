@@ -1,46 +1,21 @@
-Module One Final Project Guidelines
-Congratulations, you're at the end of module one! You've worked crazy hard to get here and have learned a ton.
+Readme
+### How to install the application
+ To install the application, go to the website https://github.com/Cooliomoded/Group-Project/tree/master. From here, fork the application. In your terminal, clone the application by using “git clone”. Once it has been cloned on your terminal, do “bundle install” to ensure all the gems are there and the environment is set up correctly.
+### Using the CLI application
+To run the application, type “ruby bin/run.rb” into the terminal to start the CLI.
+Throughout the CLI application, the CLI will ask for user input. The application will give the user different prompts to follow and different pathways based on the user input. Once the user gives an input, the CLI will go to the method that is attached to the user input and give another prompt for the user to respond to. The CLI follows this cycle until the user quits the run.rb. The user has many paths they can go through. The hero path and the villain path have the same methods and same overall paths, but just different dialogue.
+### Walkthrough 
+The CLI will first prompt "Press 1 to play as a Hero. Press 2 to play as a Villain.". The user chooses either 1 or 2 to play on their respected side. The CLI will then ask the user to press 1 to choose a hero/villain from the list in the seed data or press 2 to generate their own hero/villain with customizable attributes. For this walkthrough, the user goes down the path of an user created Hero. This is one of many paths the user can go through. The hero path and the villain path have the same methods and same overall paths, but just different dialogue.
+The CLI will go to the generate_hero_name method and prompt "What is your hero's given name?" The user you will type in a name. Once it is confirmed by the user, the CLI will go to the generate_hero_alter_ego(hero) method and ask the user to type and confirm in an alter ego. The CLI will go to the generate_hero_alter_ego(hero) method where the user will type in an alter ego. This will lead to the generate_hero_super_power(hero) method. The user will type and confirm a super power. The CLI will go to generate_hero_power_level(hero) method. This method will give a random integer to be the hero’s power level (ie. attack power), the user can choose to get a new random power level and confirm it. This will open up the generate_hero_resistance(hero) which will follow the same steps as power level. This will prompt generate_hero_hp(hero) method and does the same steps but for the hero’s health points. 
+The CLI will prompt generate_hero_gender(hero), then generate_hero_race(hero), generate_hero_origin_story(hero), then generate_hero_nemesis(hero). Each method asks the user for a string for that specific attribute. Once these attributes have been confirmed by the user, the hero is now fully created.
+The generate_your_hero_battle(hero) method will ask the user to “Press 1 to fight a Villain from the list. Press 2 to generate a random Villain." For this example the user will press 1. choose_villain_from_list(hero) method will display all the villains from villain seed. The user will type in and confirm the number of the villain they want to battle. This will start the hero_battle_sequence(hero, villain) method.
+The hero_battle_sequence(hero, villain) method will run the attack method which lowers the hero’s and villain’s hp based on their power level and resistance. A victor will be decided once either of the fighter’s health reaches 0. If the hero loses, the hero will be deleted and the game will be over. If the hero won, the hp of the hero and villain will reset and villain will be put into an insane asylum.
+After winning, the user is brought to the main menu where the user can choose to 1. Fight Another Villain, 2. Check Battle Record, 3. Rename Hero, 4. Hero Stats, 5. Quit.
+Pressing 1 will bring the user back to the generate_your_hero_battle(hero) method and go through the steps again. Pressing 2 will show all the battle objects made and their attributes. Pressing 3 will let the user update their alter ego and then bring the user back to the menu. Pressing 4 will show all the hero attributes. Pressing 5 will end run.rb
+There is a path where the user can choose a hero instead of creating a hero which will jump to the generate_your_hero_battle(hero) method and will follow the same steps from there. If the user chose to be a villain at the beginning, the user will have the same paths but for villain instead of hero.
+We hope you enjoy our Battle Simulator Game
+From Davis and Chandler
+Link to the faker generators used https://github.com/faker-ruby/faker
 
-For your final project, we'll be building a Command Line database application.
-
-Project Requirements
-Option One - Data Analytics Project
-Access a Sqlite3 Database using ActiveRecord.
-You should have at minimum three models including one join model. This means you must have a many-to-many relationship.
-You should seed your database using data that you collect either from a CSV, a website by scraping, or an API.
-Your models should have methods that answer interesting questions about the data. For example, if you've collected info about movie reviews, what is the most popular movie? What movie has the most reviews?
-You should provide a CLI to display the return values of your interesting methods.
-Use good OO design patterns. You should have separate classes for your models and CLI interface.
-Resource: Easy Access APIs
-
-Option Two - Command Line CRUD App
-Access a Sqlite3 Database using ActiveRecord.
-You should have a minimum of three models.
-You should build out a CLI to give your user full CRUD ability for at least one of your resources. For example, build out a command line To-Do list. A user should be able to create a new to-do, see all todos, update a todo item, and delete a todo. Todos can be grouped into categories, so that a to-do has many categories and categories have many to-dos.
-Use good OO design patterns. You should have separate classes for your models and CLI interface.
-Brainstorming and Proposing a Project Idea
-Projects need to be approved prior to launching into them, so take some time to brainstorm project options that will fulfill the requirements above. You must have a minimum of four user stories to help explain how a user will interact with your app. A user story should follow the general structure of "As a <role>, I want <goal/desire> so that <benefit>". For example, if we were creating an app to randomly choose nearby restaurants on Yelp, we might write:
-
-As a user, I want to be able to enter my name to retrieve my records
-As a user, I want to enter a location and be given a random nearby restaurant suggestion
-As a user, I should be able to reject a suggestion and not see that restaurant suggestion again
-As a user, I want to be able to save to and retrieve a list of favorite restaurant suggestions
-Instructions
-Fork and clone this repository.
-Build your application. Make sure to commit early and commit often. Commit messages should be meaningful (clearly describe what you're doing in the commit) and accurate (there should be nothing in the commit that doesn't match the description in the commit message). Good rule of thumb is to commit every 3-7 mins of actual coding time. Most of your commits should have under 15 lines of code and a 2 line commit is perfectly acceptable.
-Make sure to create a good README.md with a short description, install instructions, a contributor's guide and a link to the license for your code.
-Make sure your project checks off each of the above requirements.
-Prepare a video demo (narration helps!) describing how a user would interact with your working project.
-The video should:
-Have an overview of your project. (2 minutes max)
-Prepare a presentation to follow your video. (3 minutes max)
-Your presentation should:
-Describe something you struggled to build, and show us how you ultimately implemented it in your code.
-Discuss 3 things you learned in the process of working on this project.
-Address what, if anything, you would change or add to what you have today.
-Present any code you would like to highlight.
-OPTIONAL, BUT RECOMMENDED: Write a blog post about the project and process.
-Common Questions:
-How do I turn off my SQL logger?
 # in config/environment.rb add this line:
 ActiveRecord::Base.logger = nil

@@ -56,7 +56,6 @@ require_relative '../config/environment'
                 line
                 villain_setup
             end
-            
     end
     
     def gi_integer
