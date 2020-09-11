@@ -149,7 +149,7 @@ require 'pry'
             villain = Villain.all[choice]
             generate_villain_nemesis(villain)
         else line
-            puts "Your choice does not exist. Press 1 to rechoose, Press 2 to generate a Hero, Press 3 to go back."
+            puts "Your choice does not exist. Press 1 to rechoose, Press 2 to generate a Villain, Press 3 to go back."
             line
             choice = gi_integer
             if choice == 1
