@@ -769,6 +769,7 @@ require 'pry'
                     hero_battle_sequence(hero, villain)
                 elsif choice2 == 2
                     choose_villian_from_list(hero)
+                else choose_villain_from_list(hero)
                 end
         else line
             puts "Your choice does not exist. Please begin this step again."
@@ -794,6 +795,7 @@ require 'pry'
                     villain_battle_sequence(hero, villain)
                 elsif choice2 == 2
                     choose_hero_from_list(villain)
+                else choose_hero_from_list(villain)
                 end
         else line
             puts "Your choice does not exist. Please begin step again"
