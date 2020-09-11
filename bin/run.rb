@@ -267,7 +267,7 @@ require_relative '../config/environment'
     def generate_villain_super_power(villain)
         buffer
         line
-        puts "What is your hero's super power?"
+        puts "What is your villain's super power?"
         line
         choice = gi_string
         villain.super_power = choice
@@ -573,7 +573,11 @@ require_relative '../config/environment'
         villain.origin_story = choice
         buffer
         line
-        puts "Your villain's origins are #{villain.origin_story}. If this is correct, press 1. Press 2 if not. Press 3 to go back."
+        puts "Your villain's origins are:"
+        line
+        puts "#{villain.origin_story}."
+        line
+        puts "If this is correct, press 1. Press 2 if not. Press 3 to go back."
         line
         choice = gi_integer
             if choice == 1
@@ -598,7 +602,11 @@ require_relative '../config/environment'
         hero.origin_story = choice
         buffer
         line
-        puts "Your hero's origins are #{hero.origin_story}. If this is correct, press 1. Press 2 if not. Press 3 to go back."
+        puts "Your hero's origins are:"
+        line
+        puts "#{hero.origin_story}."
+        line
+        puts "If this is correct, press 1. Press 2 if not. Press 3 to go back."
         line
         choice = gi_integer
             if choice == 1
@@ -651,7 +659,7 @@ require_relative '../config/environment'
         villain.mental_health = Faker::Number.within(range: 1..10)
         buffer
         line
-        puts "Your villain's grievance is #{villain.grievance}. If this is correct, press 1. Press 2 if not. Press 3 to go back. Avoid this if you do not want to rewrite your origin story."
+        puts "Your villain's grievance is #{villain.grievance}. If this is correct, press 1. Press 2 if not. Press 3 to go back."
         line
         choice = gi_integer
             if choice == 1
@@ -894,6 +902,7 @@ require_relative '../config/environment'
     def attack(hero, villain)
         hero.update(hp: (hero.hp - (villain.power_lvl - hero.resistance)))
         villain.update(hp: (villain.hp - (hero.power_lvl - villain.resistance)))
+        sleep(1)
     end
 
     def hero_main_menu(hero)
@@ -988,6 +997,7 @@ require_relative '../config/environment'
                     line
                     puts "#{key} is #{value}"
                 end
+            line
             puts "To go back press 2."
             choice = gi_integer
             if choice == 2
@@ -1086,6 +1096,7 @@ require_relative '../config/environment'
                 line
                 puts "#{key} is #{value}"
             end
+            line
             puts "To go back press 2."
              choice = gi_integer
              if choice == 2
