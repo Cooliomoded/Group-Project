@@ -33,10 +33,8 @@ class Battle < ActiveRecord::Base
 
     #creates a battle with your hero and a random villain
     def self.start_a_battle(hero, villain)
-        Battle.create(location: Faker::Address.city, date: Faker::Date.between(from: 10.days.ago, to: Date.today), hero_id: Hero.find(hero.id), villain_id: Villain.find(villain.id), hero_win: nil, destruction: nil, destruction_severity: nil, hero_created: false, villain_created: false)
+        Battle.create(location: Faker::Address.city, date: Faker::Date.between(from: 10.days.ago, to: Date.today), hero_id: hero.id, villain_id: villain.id, hero_win: nil, destruction: nil, destruction_severity: nil, hero_created: false, villain_created: false)
     end
-
-
 
 
 end

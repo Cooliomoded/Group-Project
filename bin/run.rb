@@ -1,4 +1,5 @@
 require_relative '../config/environment'
+require 'pry'
 
     #greets the user to start the battle simulator
     def greeting
